@@ -1,0 +1,160 @@
+---
+- hosts: all
+  tasks:
+
+  # Install nodejs
+  - name: Download node repo file
+    get_url:
+      url: http://deb.nodesource.com/setup_8.x
+      dest: /tmp/node_setup
+    tags: nodejs
+
+  - name: Add node repo to apt
+    command: bash /tmp/node_setup
+    args:
+        creates: /etc/apt/sources.list.d/nodesource.list
+    tags: nodejs
+
+  # Apt packages
+  - name: Install apt packages
+    action: apt pkg={{item}}
+    with_items:
+      - apache2
+      - libaio1
+      - mysql-server
+      - libapache2-mod-php7.0
+      - libapache2-mod-authnz-external
+      - php7.0
+      - php7.0-dev
+      - php7.0-mbstring
+      - php7.0-soap
+      - php7.0-cli
+      - php7.0-common
+      - php7.0-curl
+      - php7.0-gd
+      - php7.0-mysql
+      - php7.0-mcrypt
+      - php7.0-mbstring
+      - php7.0-xml
+      - php7.0-zip
+      - git
+      - python-mysqldb
+      - postfix
+      - build-essential
+      - nodejs
+
+  - name: Install yarn
+    command: npm install yarn -g
+    args:
+      chdir: /var/www/html
+
+  - name: Install npm packages
+    command: yarn install
+    args:
+      chdir: /var/www/html
+
+  # Install composer
+  - name: Download composer
+    get_url:
+        url: https://getcomposer.org/installer
+        dest: /tmp/composer-installer
+
+  - name: Install composer
+    command: php /tmp/composer-installer --install-dir=/usr/local/bin/ --filename=composer
+    args:
+        creates: /usr/local/bin/composer
+
+  # Install/update composer packages
+  - name: Install/update composer packages
+    command: composer install
+    args:
+      chdir: /var/www/html
+    become: yes
+    become_user: vagrant
+
+  # Configure mysql-server
+  - name: Create local DB
+    mysql_db:
+      name: media-organiser
+
+  - name: Create admin db user
+    mysql_user:
+      name: vagrant
+      password: vagrant
+      priv: '*.*:ALL'
+      state: present
+
+  # Configure apache2
+  - name: Enable mod_vhost_alias, mod_rewrite, mod_ssl
+    action: apache2_module name={{item}}
+    with_items:
+      - vhost_alias
+      - rewrite
+      - ssl
+
+  - name: Create env
+    template: src=/var/www/html/.env.example
+      dest=/var/www/html/.env
+
+  - name: Replace url in env
+    replace:
+      path: /var/www/html/.env
+      regexp: 'APP_URL=(.*)'
+      replace: "APP_URL=https://{{ domain_input }}"
+
+  - name: Install apache config
+    template: src=/vagrant/{{ item }}
+      dest=/etc/apache2/sites-available/{{ item }}
+    with_items:
+      - default-ssl.conf
+      - default.conf
+
+  - name: Disable default HTTP vhost
+    command: a2dissite 000-default
+
+  - name: enable live apache2 default and 'localhost' site config
+    file: src=/etc/apache2/sites-available/{{ item.split('/')[-1] }}
+          dest=/etc/apache2/sites-enabled/{{ item.split('/')[-1] }}
+          state=link
+    with_items:
+      - default-ssl.conf
+      - default.conf
+
+  - name: Set app_key
+    command: php artisan key:generate
+    args:
+      chdir: /var/www/html
+
+  - name: Generate JWT secret key
+    command: php artisan jwt:secret
+    args:
+      chdir: /var/www/html
+
+  - name: Clear config
+    command: php artisan config:clear
+    args:
+      chdir: /var/www/html
+
+  - name: Run DB Migrations
+    command: php artisan migrate
+    args:
+      chdir: /var/www/html
+
+  - name: Run DB Seeders
+    command: php artisan db:seed
+    args:
+      chdir: /var/www/html
+
+  - name: Build latest assets
+    command: yarn dev
+    args:
+      chdir: /var/www/html
+
+  - name: Restart apache2
+    service:
+      name: apache2
+      state: restarted
+
+  # Perform these actions as root
+  become: yes
+  become_user: root
