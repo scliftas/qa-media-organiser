@@ -9,7 +9,6 @@ class File extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'path',
         'type',
         'comment',
         'blob'
