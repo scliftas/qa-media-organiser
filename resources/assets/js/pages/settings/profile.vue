@@ -25,8 +25,8 @@
 
       <!-- Submit Button -->
       <div class="form-group row">
-        <div class="col-md-9 ml-md-auto">
-          <v-button type="success" :loading="form.busy">{{ $t('update') }}</v-button>
+        <div class="col-md-9 ml-md-auto text-left">
+          <v-button type="success" :loading="form.busy" class="text-white">{{ $t('update') }}</v-button>
         </div>
       </div>
     </form>
