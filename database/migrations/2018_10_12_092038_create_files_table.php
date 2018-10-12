@@ -19,7 +19,7 @@ class CreateFilesTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('comment');
-            $table->string('blob');
+            $table->binary('blob');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
