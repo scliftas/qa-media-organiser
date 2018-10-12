@@ -1,0 +1,53 @@
+.wrapper {
+    display: flex;
+    width: 250px;
+    height: 100%;
+    float: left;
+}
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #575B69;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-x: hidden;
+
+    a:hover {
+        color: theme-color("info") !important;
+        text-decoration: none !important;
+    }
+}
+
+.sidebar-nav-item {
+    .sidebar-nav-icon {
+        width: 2em !important;
+        height: 2em;
+        color: theme-color("success");
+    }
+
+    .sidebar-nav-icon-active {
+        width: 2em !important;
+        height: 2em;
+        color: theme-color("info")
+    }
+
+    &:hover {
+        background-color: rgb(122, 126, 139);
+    }
+}
+
+#upload {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+
+    .upload-icon {
+        width: 2em !important;
+        height: 2em;
+    }
+}
