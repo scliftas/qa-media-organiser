@@ -9,7 +9,6 @@ class Image extends Model
     protected $fillable = [
         'file_id',
         'name',
-        'path',
         'blob'
     ];
 
