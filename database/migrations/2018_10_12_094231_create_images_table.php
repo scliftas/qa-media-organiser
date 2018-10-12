@@ -17,7 +17,6 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('file_id');
             $table->string('name');
-            $table->string('path');
             $table->string('blob');
             $table->timestamps();
 
