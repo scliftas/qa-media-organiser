@@ -18,7 +18,8 @@ class FileResource extends Resource
             'id' => $this->id,
             'name' => $this->name,
             'type' => $this->type,
-            'blob' => $this->blob,
+            'path' => $this->path,
+            'comment' => $this->comment,
             'image' => $this->image(),
             'playlists' => $this->playlists(),
             'categories' => $this->categories()
