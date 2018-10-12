@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Repositories\AbstractRepository;
 use App\Models\File;
 use Auth;
+use DB;
 
 class FileRepository extends AbstractRepository {
     public function __construct(File $file) {
@@ -12,13 +13,17 @@ class FileRepository extends AbstractRepository {
     }
 
     public function create($file) {
-        $data = [
-            'user_id' => Auth::user()->id,
-            'name' => $file->getClientOriginalName(),
-            'type' => $file->getClientOriginalExtension(),
-            'blob' => file_get_contents($file->getRealPath())
-        ];
+        $file_name = $file->getClientOriginalName();
 
-        return parent::create($data);
+        if (Storage::disk('local')->put($file_name, file_get_contents($file->getRealPath()))) {
+            return $this->model->create([
+                'user_id' => Auth::user()->id,
+                'name' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
+                'type' => $file->getClientOriginalExtension(),
+                'path' => Storage::disk('local')->path($file_name)
+            ]);
+        }
+        
+        return false;
     }
 }
