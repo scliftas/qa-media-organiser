@@ -45,13 +45,13 @@
 
           <div class="form-group row">
             <div class="col-md-7 offset-md-3 d-flex">
+              <router-link :to="{ name: 'login' }" class="small my-auto">
+                {{ $t('have_account') }}
+              </router-link>
               <!-- Submit Button -->
-              <v-button :loading="form.busy">
+              <v-button :loading="form.busy" :type="'success'" class="ml-auto my-auto text-white">
                 {{ $t('register') }}
               </v-button>
-
-              <!-- GitHub Register Button -->
-              <login-with-github/>
             </div>
           </div>
         </form>
@@ -62,14 +62,11 @@
 
 <script>
 import Form from 'vform'
-import LoginWithGithub from '~/components/LoginWithGithub'
 
 export default {
   middleware: 'guest',
 
-  components: {
-    LoginWithGithub
-  },
+  layout: 'basic',
 
   metaInfo () {
     return { title: this.$t('register') }
