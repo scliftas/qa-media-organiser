@@ -16,14 +16,22 @@ class FileService {
         $this->image_repository = new ImageRepository($image);
     }
 
+    public function all() {
+        return $this->file_repository->all()->with(['playlists', 'categories', 'image']);
+    }
+
+    public function create($data) {
+        return $this->file_repository->create($data);
+    }
+
     public function update($data) {
-        if (array_key_exists('file', $data)) {
-            $this->updateFile($data);
-        }
+        $file = $this->updateFile($data);
 
         if (array_key_exists('image', $data)) {
             $image = $this->image_repository->updateOrCreate($data['image']);
         }
+
+        return $file;
     }
 
     public function delete($id) {
@@ -31,7 +39,7 @@ class FileService {
         $file->categories()->detach();
         $file->playlists()->detach();
         $file->image()->delete();
-        $this->file_repository->delete($id);
+        return $this->file_repository->delete($id);
     }
 
     private function updateFile($data) {
@@ -44,6 +52,8 @@ class FileService {
         if (array_key_exists('categories', $data)) {
             $this->attachFileToCategories($data, $file);
         }
+
+        return $file;
     }
 
     private function attachFileToPlaylists($data, $file) {
