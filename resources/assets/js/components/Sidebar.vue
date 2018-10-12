@@ -7,6 +7,12 @@
             </router-link>
         </div>
 
+        <ul class="list-unstyled components">
+            <li  :class="'sidebar-nav-item p-4 d-flex hvr-grow'">
+              <span class="my-auto ml-3">All</span>
+            </li>
+        </ul>
+
         <upload/>
     </div>
   </div>
