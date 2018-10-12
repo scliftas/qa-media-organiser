@@ -4,12 +4,14 @@ import * as types from '../mutation-types'
 // state
 export const state = {
   files: [],
+  chosenFile: {},
   typeId: '0'
 }
 
 // getters
 export const getters = {
   files: state => state.files,
+  chosenFile: state => state.chosenFile,
   typeId: state => state.typeId
 }
 
@@ -49,6 +51,14 @@ export const mutations = {
   [types.RESET_FILES] (state) {
     state.files = []
     state.typeId = null
+  },
+
+  async [types.SET_CHOSEN_FILE] (state, { chosenFile }) {
+    state.chosenFile = chosenFile
+  },
+
+  [types.CLEAR_CHOSEN_FILE] (state) {
+    state.chosenFile = {}
   }
 }
 
@@ -97,6 +107,14 @@ export const actions = {
 
   clearFiles ({ commit }) {
     commit(types.RESET_FILES)
+  },
+
+  async setChosenFile ({ commit }, chosenFile) {
+    await commit(types.SET_CHOSEN_FILE, { chosenFile: chosenFile })
+  },
+
+  clearChosenFile ({ commit }) {
+    commit(types.CLEAR_CHOSEN_FILE)
   }
 }
 
