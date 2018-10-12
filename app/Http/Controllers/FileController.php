@@ -7,7 +7,7 @@ use App\Services\FileService;
 use App\Requests\UploadFileRequest;
 use App\Resources\FileResource;
 
-class Fileontroller extends Controller
+class FileController extends Controller
 {
     protected $file_service;
 
