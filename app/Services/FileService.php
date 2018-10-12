@@ -17,7 +17,7 @@ class FileService {
     }
 
     public function all() {
-        return $this->file_repository->all()->with(['playlists', 'categories', 'image']);
+        return $this->file_repository->all();
     }
 
     public function create($data) {
