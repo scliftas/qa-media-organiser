@@ -11,7 +11,7 @@ class File extends Model
         'name',
         'type',
         'comment',
-        'blob'
+        'path'
     ];
 
     public function user()
