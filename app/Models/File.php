@@ -20,6 +20,11 @@ class File extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function image()
+    {
+        return $this->hasOne('App\Models\Image');
+    }
+
     public function playlists()
     {
         return $this->belongsToMany('App\Models\Playlist', 'playlist_files', 'file_id', 'playlist_id');
