@@ -38,7 +38,7 @@
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
-              <v-button :loading="form.busy">
+              <v-button :loading="form.busy" :type="'success'" class="ml-auto my-auto text-white">
                 {{ $t('reset_password') }}
               </v-button>
             </div>
@@ -54,6 +54,8 @@ import Form from 'vform'
 
 export default {
   middleware: 'guest',
+
+  layout: 'basic',
 
   metaInfo () {
     return { title: this.$t('reset_password') }
