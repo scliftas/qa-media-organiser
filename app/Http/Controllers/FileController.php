@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\FileService;
-use App\Requests\UploadFileRequest;
-use App\Resources\FileResource;
+use App\Http\Requests\UploadFileRequest;
+use App\Http\Resources\FileResource;
 
 class FileController extends Controller
 {
