@@ -1,19 +1,22 @@
 <template>
     <div class="row pl-3">
-        <file v-for="file in this.files" :key="file.name" :file="file"/>
+        <file v-for="file in this.files" :key="file.id" :file="file"/>
+        <FileModal/>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 import File from '~/components/File'
+import FileModal from '~/components/FileModal'
 import { mapGetters } from 'vuex'
 
 export default {
   middleware: 'auth',
 
   components: {
-    File
+    File,
+    FileModal
   },
 
   computed: mapGetters({

@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-2 hvr-shrink m-3">
+    <div @click="showModal()" class="col-sm-2 hvr-shrink m-3">
         <div :id="'file-' + this.file.id" class="file">
             <img v-if="this.file.image !== {}" :src="this.file.image.path"/>
             <fa v-else class="h-50 w-50 m-5" icon="play" :style="{ color: 'lightgrey' }"/>
@@ -50,6 +50,11 @@ export default {
             this.$set(this.status, 'deleting', true)
             await this.$store.dispatch('files/deleteFile', this.file);
             this.$set(this.status, 'deleting', false)
+        },
+
+        async showModal () {
+            await this.$store.dispatch('files/setChosenFile', this.file)
+            this.$root.$emit('bv::show::modal', 'file-modal')
         }
     }
 }
