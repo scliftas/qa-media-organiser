@@ -18,7 +18,7 @@ class CreateFilesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->string('type');
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->binary('blob');
             $table->timestamps();
 
