@@ -4,8 +4,8 @@ namespace App\Repositories;
 
 use App\Repositories\AbstractRepository;
 use App\Models\File;
+use Storage;
 use Auth;
-use DB;
 
 class FileRepository extends AbstractRepository {
     public function __construct(File $file) {
