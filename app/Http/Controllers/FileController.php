@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\FileService;
+use App\Http\Requests\GetFilesRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Resources\FileResource;
+use Auth;
 
 class FileController extends Controller
 {
@@ -13,6 +15,11 @@ class FileController extends Controller
 
     public function __construct(FileService $file_service) {
         $this->file_service = $file_service;
+    }
+
+    public function get(GetFilesRequest $request) {
+        $files = $this->file_service->all();
+        return FileResource::collection($files->where('user_id', Auth::user()->id))->resolve();
     }
 
     public function upload(UploadFileRequest $request) {
