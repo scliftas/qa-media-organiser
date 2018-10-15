@@ -11,6 +11,7 @@
             <li  :class="'sidebar-nav-item p-4 d-flex hvr-grow'">
               <span class="my-auto ml-3">All</span>
             </li>
+            <dropdown title="Categories" :items="[{ name: 'Test Item 1' }]" @itemChosen="setCategory"/>
         </ul>
 
         <upload/>
@@ -20,16 +21,19 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Dropdown from '~/components/dropdown'
 import Upload from '~/components/upload'
 import axios from 'axios'
 
 export default {
   data: () => ({
     appName: window.config.appName,
-    nav_items: []
+    nav_items: [],
+    categoriesToggled: false
   }),
 
   components: {
+    Dropdown,
     Upload
   },
 
@@ -38,10 +42,15 @@ export default {
     typeId: 'files/typeId'
   }),
 
-  mounted () {
-  },
-
   methods: {
+    toggleCategories () {
+      this.categoriesToggled = !this.categoriesToggled
+      console.log(this.categoriesToggled)
+    },
+
+    setCategory (category) {
+      console.log(category)
+    }
   }
 }
 </script>
