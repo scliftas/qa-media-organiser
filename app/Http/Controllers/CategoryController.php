@@ -7,6 +7,7 @@ use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use Auth;
+use App\Http\Requests\CreateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -18,5 +19,12 @@ class CategoryController extends Controller
 
     public function get(Request $request) {
         return CategoryResource::collection($this->category->all()->where('user_id', Auth::user()->id))->resolve(); 
+    }
+
+    public function create(CreateCategoryRequest $request) {
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        $category = new CategoryResource($this->category->create($data));
+        return $category->resolve();
     }
 }

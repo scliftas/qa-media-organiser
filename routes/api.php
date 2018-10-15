@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('files/delete', 'FileController@delete');
 
     Route::post('categories/get', 'CategoryController@get');
+    Route::post('categories/create', 'CategoryController@create');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
