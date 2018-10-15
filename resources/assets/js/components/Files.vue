@@ -1,6 +1,6 @@
 <template>
     <div class="row pl-3">
-        <file v-for="file in this.files" :key="file.id" :file="file"/>
+        <file v-for="file in this.files" :key="file.id" v-if="showFile(file)" :file="file"/>
         <FileModal/>
     </div>
 </template>
@@ -20,11 +20,18 @@ export default {
   },
 
   computed: mapGetters({
-    files: 'files/files'
+    files: 'files/files',
+    currentCategoryID: 'categories/currentCategoryID'
   }),
 
   mounted: async function () {
     await this.$store.dispatch('files/getFiles', this.$router.currentRoute.params.type_id || false)
   },
+
+  methods: {
+    showFile (file) {
+      return (this.currentCategoryID === null || file.categories.includes(this.currentCategoryID))
+    }
+  }
 }
 </script>
