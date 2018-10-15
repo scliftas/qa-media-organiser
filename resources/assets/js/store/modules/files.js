@@ -120,12 +120,16 @@ export const actions = {
 
   async updateFile ({ commit }, fileData) {
     const formData = new FormData()
-    
+
     for (var key in fileData.file) {
       formData.append('file[' + key + ']', fileData.file[key])
     }
 
-    formData.append('image', fileData.image)
+    if (fileData.image !== null) formData.append('image', fileData.image)
+
+    for (var category of fileData.categories) {
+      formData.append('categories[]', category)
+    }
 
     const { data } = await axios.post('/api/files/update', formData)
     commit(types.UPDATE_FILE_SUCCESS, { updatedFile: data })

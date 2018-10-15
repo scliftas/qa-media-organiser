@@ -15,6 +15,10 @@
                         <div class="row">
                             <div class="col">
                                 <p class="h6">Categories</p>
+                                <div v-for="(category, index) in this.categories" :key="index" class="form-check">
+                                    <input class="form-check-input" type="checkbox" v-model="form.categories" :id="category.id" :value="category.id">
+                                    <label class="form-check-label" for="category.id">{{ category.name }}</label>
+                                </div>
                             </div>
                             <div class="col">
                                 <p class="h6">Playlists</p>
@@ -61,7 +65,8 @@ export default {
                 id: '',
                 comment: ''
             },
-            image: {}
+            image: {},
+            categories: []
         },
         status: {
             downloading: false,
@@ -71,7 +76,8 @@ export default {
     }),
 
     computed: mapGetters({
-        file: 'files/chosenFile'
+        file: 'files/chosenFile',
+        categories: 'categories/categories'
     }),
 
     watch: {
@@ -80,7 +86,9 @@ export default {
                 file: {
                     id: this.file.id,
                     comment: this.file.comment === null ? '' : this.file.comment
-                }
+                },
+                image: null,
+                categories: this.file.categories
             }
         }
     },
