@@ -32,9 +32,9 @@
         </div>
         <div slot="modal-footer">
             <b-button-group class="text-white">
-                <b-button @click="closeModal()" variant="danger">Cancel</b-button>
+                <b-button @click="closeModal()" variant="danger" :class="(this.status.deleting ? 'btn-loading' : '')">Cancel</b-button>
                 <b-dropdown right variant="danger">
-                    <b-dropdown-item>Delete</b-dropdown-item>
+                    <b-dropdown-item @click="deleteFile()">Delete</b-dropdown-item>
                 </b-dropdown>
             </b-button-group>
 
@@ -126,6 +126,13 @@ export default {
                 document.body.appendChild(link);
                 link.click();
             })
+        },
+
+        async deleteFile () {
+            this.$set(this.status, 'deleting', true)
+            await this.$store.dispatch('files/deleteFile', this.file);
+            this.$set(this.status, 'deleting', false)
+            this.closeModal()
         },
     }
 }
