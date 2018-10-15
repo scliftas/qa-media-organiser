@@ -69,8 +69,10 @@ class FileService {
     }
 
     private function attachFileToCategories($data, $file) {
+        $file->categories()->detach();
+        $data['categories'] = array_unique($data['categories']);
         foreach ($data['categories'] as $category) {
-            $file->categories()->attach($category['id']);
+            $file->categories()->attach($category);
         }
     }
 }
