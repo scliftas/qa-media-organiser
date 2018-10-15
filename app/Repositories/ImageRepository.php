@@ -4,19 +4,23 @@ namespace App\Repositories;
 
 use App\Repositories\AbstractRepository;
 use App\Models\Image;
+use Storage;
 
 class ImageRepository extends AbstractRepository {
     public function __construct(Image $image) {
         parent::__construct($image);
     }
 
-    public function updateOrCreate($data) {
-        $image = [
-            'file_id' => $data['file_id'],
-            'name' => $data['image']->getClientOriginalName(),
-            'blob' => file_get_contents($data['image']->getRealPath())
-        ];
+    public function updateOrCreate($file, $file_id) {
+        $file_name = $file->getClientOriginalName();
 
-        return $this->model->updateOrCreate($image);
+        if (Storage::disk('local')->put($file_name, file_get_contents($file->getRealPath()))) {
+            return $this->model->updateOrCreate([
+                'file_id' => $file_id,
+                'name' => $file->getClientOriginalName(),
+                'path' => Storage::disk('local')->path($file_name)
+            ]);
+        }
+        
     }
 }
