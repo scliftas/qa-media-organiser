@@ -26,6 +26,10 @@ export const mutations = {
 
   [types.SET_CURRENT_CATEGORY] (state, { categoryID }) {
     state.currentCategoryID = categoryID
+  },
+
+  [types.CLEAR_CURRENT_CATEGORY] (state) {
+    state.currentCategoryID = null
   }
 }
 
@@ -48,5 +52,9 @@ export const actions = {
 
   setCurrentCategory ({ commit }, categoryID) {
     commit(types.SET_CURRENT_CATEGORY, { categoryID: categoryID })
+  },
+
+  clearCurrentCategory ({ commit }) {
+    commit(types.CLEAR_CURRENT_CATEGORY)
   }
 }
