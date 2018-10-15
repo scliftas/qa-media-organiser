@@ -100,7 +100,6 @@ export default {
 
         attachImage (files) {
             this.form.image = files[0]
-            console.log(this.form)
         },
 
         async saveFile () {
