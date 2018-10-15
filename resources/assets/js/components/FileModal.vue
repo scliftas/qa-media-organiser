@@ -22,7 +22,7 @@
                         </div>
                     </div>
 
-                    <textarea class="form-control mb-3" v-model="this.file.comment" placeholder="Comments" maxlength="255" rows="5" style="resize: none"></textarea>
+                    <textarea class="form-control mb-3" v-model="form.file.comment" placeholder="Comments" maxlength="255" rows="5" style="resize: none"></textarea>
 
                     <v-button :type="'info'" class="ml-auto my-auto text-white p-2 w-100">
                         Attach Image <fa icon="image" :style="{ color: 'white' }"/>
@@ -39,7 +39,7 @@
             </b-button-group>
 
             <b-button-group>
-                <b-button class="text-white" variant="success">Save</b-button>
+                <b-button @click="saveFile()" class="text-white" variant="success">Save</b-button>
                 <b-dropdown toggle-class="text-white" right variant="success">
                     <b-dropdown-item>Download</b-dropdown-item>
                 </b-dropdown>
@@ -53,9 +53,29 @@ import { mapGetters } from 'vuex'
 
 export default {
 
+    data: () => ({
+        form: {
+            file: {
+                id: '',
+                comment: ''
+            }
+        }
+    }),
+
     computed: mapGetters({
         file: 'files/chosenFile'
     }),
+
+    watch: {
+        file (file) {
+            this.form = {
+                file: {
+                    id: this.file.id,
+                    comment: this.file.comment === null ? '' : this.file.comment
+                }
+            }
+        }
+    },
 
     methods: {
         modalHidden () {
@@ -68,6 +88,10 @@ export default {
 
         closeModal () {
             this.$root.$emit('bv::hide::modal', 'file-modal')
+        },
+
+        async saveFile () {
+            await this.$store.dispatch('files/updateFile', this.form)
         }
     }
 }
