@@ -11,7 +11,7 @@
             <li  :class="'sidebar-nav-item p-4 d-flex hvr-grow'">
               <span class="my-auto ml-3">All</span>
             </li>
-            <dropdown title="Categories" :items="this.categories" @itemChosen="setCategory"/>
+            <dropdown title="Categories" :items="this.categories" @itemChosen="setCategory" @createNewItem="createNewCategory"/>
             <dropdown title="Playlists" :items="[{ name: 'Test Playlist 1' }]" @itemChosen="setPlaylist"/>
         </ul>
 
@@ -53,6 +53,10 @@ export default {
 
     setPlaylist (playlist) {
       console.log(playlist)
+    },
+
+    createNewCategory () {
+      this.$root.$emit('bv::show::modal', 'category-modal')
     }
   }
 }
