@@ -36,12 +36,8 @@ export const mutations = {
   },
 
   [types.DELETE_FILE_SUCCESS] (state, { id }) {
-    let i = 0
-
-    for (var file of state.files) {
-      if (file.id === id && file.type_id === state.typeId) state.files.splice(i, 1)
-      i++
-    }
+    const index = state.files.findIndex(file => file.id === id)
+    if (index !== -1) state.files.splice(index, 1)
   },
 
   [types.SET_CHOSEN_TYPE] (state, { typeId }) {
