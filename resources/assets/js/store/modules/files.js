@@ -131,6 +131,10 @@ export const actions = {
       formData.append('categories[]', category)
     }
 
+    for (var playlist of fileData.playlists) {
+      formData.append('playlists[]', playlist)
+    }
+
     const { data } = await axios.post('/api/files/update', formData)
     commit(types.UPDATE_FILE_SUCCESS, { updatedFile: data })
   }
