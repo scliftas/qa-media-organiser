@@ -27,7 +27,8 @@ class UpdateFileRequest extends FormRequest
             'file' => 'required',
             'file.id' => 'required',
             'file.comment' => 'sometimes|nullable|string|max:255',
-            'image' => 'filled|file'
+            'image' => 'sometimes|nullable|file',
+            'categories' => 'sometimes|nullable|array'
         ];
     }
 }
