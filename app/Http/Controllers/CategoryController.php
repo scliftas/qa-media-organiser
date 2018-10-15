@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
+use Auth;
 
 class CategoryController extends Controller
 {
