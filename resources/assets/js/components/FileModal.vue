@@ -17,11 +17,15 @@
                                 <p class="h6">Categories</p>
                                 <div v-for="(category, index) in this.categories" :key="index" class="form-check">
                                     <input class="form-check-input" type="checkbox" v-model="form.categories" :id="category.id" :value="category.id">
-                                    <label class="form-check-label" for="category.id">{{ category.name }}</label>
+                                    <label class="form-check-label" :for="category.id">{{ category.name }}</label>
                                 </div>
                             </div>
                             <div class="col">
                                 <p class="h6">Playlists</p>
+                                <div v-for="(playlist, index) in this.playlists" :key="index" class="form-check">
+                                    <input class="form-check-input" type="checkbox" v-model="form.playlists" :id="playlist.id" :value="playlist.id">
+                                    <label class="form-check-label" :for="playlist.id">{{ playlist.name }}</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,7 +70,8 @@ export default {
                 comment: ''
             },
             image: {},
-            categories: []
+            categories: [],
+            playlists: []
         },
         status: {
             downloading: false,
@@ -77,7 +82,8 @@ export default {
 
     computed: mapGetters({
         file: 'files/chosenFile',
-        categories: 'categories/categories'
+        categories: 'categories/categories',
+        playlists: 'playlists/playlists'
     }),
 
     watch: {
@@ -88,7 +94,8 @@ export default {
                     comment: this.file.comment === null ? '' : this.file.comment
                 },
                 image: null,
-                categories: this.file.categories
+                categories: this.file.categories,
+                playlists: this.file.playlists
             }
         }
     },
