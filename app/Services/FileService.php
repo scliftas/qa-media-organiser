@@ -32,7 +32,7 @@ class FileService {
         $file = $this->updateFile($data);
 
         if (array_key_exists('image', $data)) {
-            $image = $this->image_repository->updateOrCreate($data['image']);
+            $image = $this->image_repository->updateOrCreate($data['image'], $file->id);
         }
 
         return $file;
