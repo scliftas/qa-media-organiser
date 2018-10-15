@@ -92,6 +92,7 @@ export default {
 
         async saveFile () {
             await this.$store.dispatch('files/updateFile', this.form)
+            this.closeModal()
         }
     }
 }
