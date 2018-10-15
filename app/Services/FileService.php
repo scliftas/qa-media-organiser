@@ -39,7 +39,7 @@ class FileService {
     }
 
     public function delete($id) {
-        $file = $this->file_repository->getWith($id);
+        $file = $this->file_repository->get($id);
         $file->categories()->detach();
         $file->playlists()->detach();
         $file->image()->delete();
