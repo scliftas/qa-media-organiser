@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Models\File;
 use App\Models\Image;
+use App\Models\Playlist;
 use App\Repositories\FileRepository;
 use App\Repositories\ImageRepository;
+use DB;
 
 class FileService {
     protected $file_repository;
@@ -61,9 +63,13 @@ class FileService {
     }
 
     private function attachFileToPlaylists($data, $file) {
+        $file->playlists()->detach();
+        $data['playlists'] = array_unique($data['playlists']);
+
         foreach ($data['playlists'] as $playlist) {
-            $file->playlists()->attach($playlist['id'], [
-                'position' => $playlist['position']
+            $last_position = DB::table('playlist_files')->where('playlist_id', $playlist)->max('position');
+            $file->playlists()->attach($playlist, [
+                'position' => $last_position !== null ? $last_position++ : 1
             ]);
         }
     }
