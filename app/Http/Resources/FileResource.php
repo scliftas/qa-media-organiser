@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
+use Storage;
 
 class FileResource extends Resource
 {
@@ -20,7 +21,7 @@ class FileResource extends Resource
             'type' => $this->type,
             'path' => $this->path,
             'comment' => $this->comment,
-            'image' => $this->image(),
+            'image' => base64_encode(Storage::disk('local')->get($this->image->first()->name)),
             'playlists' => $this->playlists(),
             'categories' => $this->categories()
         ];
