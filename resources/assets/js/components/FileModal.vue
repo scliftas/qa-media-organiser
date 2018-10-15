@@ -6,7 +6,7 @@
         <div class="container" v-if="objectHasProperties(this.file)">
             <div class="row align-items-center pt-3 pb-3">
                 <div class="col">
-                    <img v-if="objectHasProperties(this.file.image)" :src="this.file.image.path"/>
+                    <img v-if="this.file.image !== {}" class="img-fluid file-modal-image" :src="'data:image/png;base64, ' + this.file.image"/>
                     <fa v-else class="m-4" size="6x" icon="play" :style="{ color: 'lightgrey' }"/>
                     <p><b>Type: </b>{{ this.file.type }}</p>
                 </div>
