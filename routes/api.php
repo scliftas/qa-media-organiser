@@ -31,6 +31,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('categories/get', 'CategoryController@get');
     Route::post('categories/create', 'CategoryController@create');
+
+    Route::post('playlists/get', 'PlaylistController@get');
+    Route::post('playlists/create', 'PlaylistController@create');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
