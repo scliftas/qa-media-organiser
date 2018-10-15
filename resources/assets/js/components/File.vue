@@ -1,7 +1,7 @@
 <template>
     <div @click="showModal()" class="col-sm-2 hvr-shrink m-3">
         <div :id="'file-' + this.file.id" class="file">
-            <img v-if="this.file.image !== {}" class="img-fluid file-image" :src="'data:image/png;base64, ' + this.file.image"/>
+            <img v-if="this.file.image !== null" class="img-fluid file-image" :src="'data:image/png;base64, ' + this.file.image"/>
             <fa v-else class="h-50 w-50 m-5" icon="play" :style="{ color: 'lightgrey' }"/>
             <span class="file-name p-3">{{ this.file.name }}</span>
         </div>
