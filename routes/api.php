@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('files/get', 'FileController@get');
     Route::post('files/upload', 'FileController@upload');
+    Route::post('files/update', 'FileController@update');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

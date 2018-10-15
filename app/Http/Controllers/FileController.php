@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\FileService;
 use App\Http\Requests\GetFilesRequest;
 use App\Http\Requests\UploadFileRequest;
+use App\Http\Requests\UpdateFileRequest;
 use App\Http\Resources\FileResource;
 use Auth;
 
@@ -34,5 +35,9 @@ class FileController extends Controller
         $uploaded_files = collect($uploaded_files);
 
         return FileResource::collection($uploaded_files)->resolve();
+    }
+
+    public function update(UpdateFileRequest $request) {
+        return new FileResource($this->file_service->update($request->all()));
     }
 }
