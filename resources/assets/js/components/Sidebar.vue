@@ -8,7 +8,7 @@
         </div>
 
         <ul class="list-unstyled components">
-            <li  :class="'sidebar-nav-item p-4 d-flex hvr-grow'">
+            <li @click="resetFilters" :class="'sidebar-nav-item p-4 d-flex hvr-grow'">
               <span class="my-auto ml-3">All</span>
             </li>
             <dropdown title="Categories" :items="this.categories" @itemChosen="setCategory" @createNewItem="createNewCategory"/>
@@ -47,6 +47,10 @@ export default {
   },
 
   methods: {
+    resetFilters () {
+      this.$store.dispatch('categories/clearCurrentCategory')
+    },
+
     setCategory (category) {
       this.$store.dispatch('categories/setCurrentCategory', category.id)
     },
