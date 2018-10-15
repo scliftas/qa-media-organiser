@@ -2,11 +2,13 @@ import axios from 'axios'
 import * as types from '../mutation-types'
 
 export const state = {
-  categories: []
+  categories: [],
+  currentCategoryID: null
 }
 
 export const getters = {
-  categories: state => state.categories
+  categories: state => state.categories,
+  currentCategoryID: state => state.currentCategoryID
 }
 
 export const mutations = {
@@ -20,6 +22,10 @@ export const mutations = {
 
   [types.CREATE_CATEGORY_SUCCESS] (state, { category }) {
     state.categories.push(category)
+  },
+
+  [types.SET_CURRENT_CATEGORY] (state, { categoryID }) {
+    state.currentCategoryID = categoryID
   }
 }
 
@@ -38,5 +44,9 @@ export const actions = {
     const { data } = await axios.post('/api/categories/create', { name: name })
 
     commit(types.CREATE_CATEGORY_SUCCESS, { category: data })
+  },
+
+  setCurrentCategory ({ commit }, categoryID) {
+    commit(types.SET_CURRENT_CATEGORY, { categoryID: categoryID })
   }
 }
