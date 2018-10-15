@@ -38,6 +38,8 @@ class FileController extends Controller
     }
 
     public function update(UpdateFileRequest $request) {
-        return new FileResource($this->file_service->update($request->all()));
+        $data = $request->all();
+        $files = new FileResource($this->file_service->update($data));
+        return $files->resolve();
     }
 }
