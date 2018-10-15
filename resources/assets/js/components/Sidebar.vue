@@ -11,7 +11,7 @@
             <li  :class="'sidebar-nav-item p-4 d-flex hvr-grow'">
               <span class="my-auto ml-3">All</span>
             </li>
-            <dropdown title="Categories" :items="[{ name: 'Test Item 1' }]" @itemChosen="setCategory"/>
+            <dropdown title="Categories" :items="this.categories" @itemChosen="setCategory"/>
             <dropdown title="Playlists" :items="[{ name: 'Test Playlist 1' }]" @itemChosen="setPlaylist"/>
         </ul>
 
@@ -39,8 +39,12 @@ export default {
 
   computed: mapGetters({
     user: 'auth/user',
-    typeId: 'files/typeId'
+    categories: 'categories/categories'
   }),
+
+  mounted () {
+    this.$store.dispatch('categories/getCategories')
+  },
 
   methods: {
     setCategory (category) {
