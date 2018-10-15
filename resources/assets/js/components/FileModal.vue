@@ -39,9 +39,9 @@
             </b-button-group>
 
             <b-button-group>
-                <b-button @click="saveFile()" class="text-white" variant="success">Save</b-button>
+                <b-button @click="saveFile()" :class="((this.status.saving || this.status.downloading) ? 'btn-loading ' : '') + 'text-white'" variant="success">Save</b-button>
                 <b-dropdown toggle-class="text-white" right variant="success">
-                    <b-dropdown-item>Download</b-dropdown-item>
+                    <b-dropdown-item @click="downloadFile()">Download</b-dropdown-item>
                 </b-dropdown>
             </b-button-group>
         </div>
@@ -50,6 +50,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import axios from 'axios'
 
 export default {
 
@@ -59,6 +60,11 @@ export default {
                 id: '',
                 comment: ''
             }
+        },
+        status: {
+            downloading: false,
+            deleting: false,
+            saving: false
         }
     }),
 
@@ -91,9 +97,36 @@ export default {
         },
 
         async saveFile () {
+            this.$set(this.status, 'saving', true)
             await this.$store.dispatch('files/updateFile', this.form)
+            this.$set(this.status, 'saving', false)
             this.closeModal()
-        }
+        },
+
+        async downloadFile () {
+            this.$set(this.status, 'downloading', true)
+
+            axios({
+                url: '/api/files/download',
+                method: 'POST',
+                data: { id: this.file.id },
+                responseType: 'blob',
+            })
+            .then(response => {
+                if (!response.data) {
+                    throw new Error('File could not be downloaded');
+                }
+
+                this.$set(this.status, 'downloading', false)
+                
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', this.file.name + '.' + this.file.type);
+                document.body.appendChild(link);
+                link.click();
+            })
+        },
     }
 }
 </script>
