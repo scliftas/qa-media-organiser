@@ -8,6 +8,7 @@ use App\Http\Requests\GetFilesRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\UpdateFileRequest;
 use App\Http\Requests\DownloadFileRequest;
+use App\Http\Requests\DeleteFileRequest;
 use App\Http\Resources\FileResource;
 use Auth;
 use Storage;
@@ -49,5 +50,10 @@ class FileController extends Controller
         $file_id = $request->input('id');
         $file = $this->file_service->get($file_id);
         return Storage::disk('local')->get($file->name . '.' . $file->type);
+    }
+
+    public function delete(DeleteFileRequest $request) {
+        $file_id = $request->input('id');
+        return $this->file_service->delete($file_id);
     }
 }
