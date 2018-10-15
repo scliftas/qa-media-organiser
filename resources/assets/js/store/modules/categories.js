@@ -16,6 +16,10 @@ export const mutations = {
 
   [types.FETCH_CATEGORIES_FAILURE] (state) {
     state.categories = []
+  },
+
+  [types.CREATE_CATEGORY_SUCCESS] (state, { category }) {
+    state.categories.push(category)
   }
 }
 
@@ -28,5 +32,11 @@ export const actions = {
     } catch (e) {
       commit(types.FETCH_CATEGORIES_FAILURE)
     }
+  },
+
+  async createCategory ({ commit }, name) {
+    const { data } = await axios.post('/api/categories/create', { name: name })
+
+    commit(types.CREATE_CATEGORY_SUCCESS, { category: data })
   }
 }
