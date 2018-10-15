@@ -26,7 +26,8 @@ class UpdateFileRequest extends FormRequest
         return [
             'file' => 'required',
             'file.id' => 'required',
-            'file.comment' => 'string|max:255',
+            'file.comment' => 'sometimes|nullable|string|max:255',
+            'image' => 'filled|file'
         ];
     }
 }
