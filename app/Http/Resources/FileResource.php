@@ -21,7 +21,7 @@ class FileResource extends Resource
             'type' => $this->type,
             'path' => $this->path,
             'comment' => $this->comment,
-            'image' => $this->image()->exists() ? base64_encode(Storage::disk('local')->get($this->image->first()->name)) : null,
+            'image' => $this->image()->exists() ? base64_encode(Storage::disk('local')->get($this->image->name)) : null,
             'playlists' => $this->playlists->pluck('id')->toArray(),
             'categories' => $this->categories->pluck('id')->toArray()
         ];
