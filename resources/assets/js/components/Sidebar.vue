@@ -12,6 +12,7 @@
               <span class="my-auto ml-3">All</span>
             </li>
             <dropdown title="Categories" :items="[{ name: 'Test Item 1' }]" @itemChosen="setCategory"/>
+            <dropdown title="Playlists" :items="[{ name: 'Test Playlist 1' }]" @itemChosen="setPlaylist"/>
         </ul>
 
         <upload/>
@@ -28,8 +29,7 @@ import axios from 'axios'
 export default {
   data: () => ({
     appName: window.config.appName,
-    nav_items: [],
-    categoriesToggled: false
+    nav_items: []
   }),
 
   components: {
@@ -43,13 +43,12 @@ export default {
   }),
 
   methods: {
-    toggleCategories () {
-      this.categoriesToggled = !this.categoriesToggled
-      console.log(this.categoriesToggled)
-    },
-
     setCategory (category) {
       console.log(category)
+    },
+
+    setPlaylist (playlist) {
+      console.log(playlist)
     }
   }
 }
