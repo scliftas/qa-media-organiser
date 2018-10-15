@@ -7,6 +7,7 @@
         <transition name="slide-fade">
             <ul v-if="toggled" class="list-unstyled components">
                 <li v-for="(item, index) in this.items" :key="index" @click="$emit('itemChosen', item)" :class="'sidebar-nav-item p-4 pl-5 d-flex hvr-grow'">{{ item.name }}</li>
+                <li @click="$emit('createNewItem')" class="sidebar-nav-item p-4 pl-5 d-flex hvr-grow"><fa icon="plus" class="mr-2 mt-1"></fa> Create New</li>
             </ul>
         </transition>
     </div>
