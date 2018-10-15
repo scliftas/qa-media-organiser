@@ -30,6 +30,11 @@ export const mutations = {
     }
   },
 
+  [types.UPDATE_FILE_SUCCESS] (state, { updatedFile }) {
+    const index = state.files.findIndex(file => file.id === updatedFile.id)
+    if (index !== -1) state.files.splice(index, 1, updatedFile)
+  },
+
   [types.DELETE_FILE_SUCCESS] (state, { id }) {
     let i = 0
 
@@ -115,6 +120,11 @@ export const actions = {
 
   clearChosenFile ({ commit }) {
     commit(types.CLEAR_CHOSEN_FILE)
+  },
+
+  async updateFile ({ commit }, file) {
+    const { data } = await axios.post('/api/files/update', file)
+    commit(types.UPDATE_FILE_SUCCESS, { updatedFile: data })
   }
 }
 
