@@ -1,6 +1,6 @@
 <template>
     <b-modal @hidden="modalHidden()" id="file-modal" size="lg">
-        <div slot="modal-header">
+        <div slot="modal-header" class="w-100">
             <h5 class="text-info m-0">{{ this.file.name }}</h5>
         </div>
         <div class="container" v-if="objectHasProperties(this.file)">
@@ -32,7 +32,7 @@
         </div>
         <div slot="modal-footer">
             <b-button-group class="text-white">
-                <b-button variant="danger">Cancel</b-button>
+                <b-button @click="closeModal()" variant="danger">Cancel</b-button>
                 <b-dropdown right variant="danger">
                     <b-dropdown-item>Delete</b-dropdown-item>
                 </b-dropdown>
@@ -61,8 +61,13 @@ export default {
         modalHidden () {
             this.$store.dispatch('files/clearChosenFile')
         },
+
         objectHasProperties (obj) {
             return Object.keys(obj).length > 0
+        },
+
+        closeModal () {
+            this.$root.$emit('bv::hide::modal', 'file-modal')
         }
     }
 }
