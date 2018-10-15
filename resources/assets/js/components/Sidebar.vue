@@ -48,7 +48,7 @@ export default {
 
   methods: {
     setCategory (category) {
-      console.log(category)
+      this.$store.dispatch('categories/setCurrentCategory', category.id)
     },
 
     setPlaylist (playlist) {
