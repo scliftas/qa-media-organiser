@@ -52,7 +52,7 @@ export default {
     },
 
     setCategory (category) {
-      this.$store.dispatch('categories/setCurrentCategory', category.id)
+      this.$store.dispatch('categories/setCurrentCategory', category)
     },
 
     setPlaylist (playlist) {

@@ -3,12 +3,12 @@ import * as types from '../mutation-types'
 
 export const state = {
   categories: [],
-  currentCategoryID: null
+  currentCategory: null
 }
 
 export const getters = {
   categories: state => state.categories,
-  currentCategoryID: state => state.currentCategoryID
+  currentCategory: state => state.currentCategory
 }
 
 export const mutations = {
@@ -24,12 +24,12 @@ export const mutations = {
     state.categories.push(category)
   },
 
-  [types.SET_CURRENT_CATEGORY] (state, { categoryID }) {
-    state.currentCategoryID = categoryID
+  [types.SET_CURRENT_CATEGORY] (state, { category }) {
+    state.currentCategory = category
   },
 
   [types.CLEAR_CURRENT_CATEGORY] (state) {
-    state.currentCategoryID = null
+    state.currentCategory = null
   }
 }
 
@@ -50,8 +50,8 @@ export const actions = {
     commit(types.CREATE_CATEGORY_SUCCESS, { category: data })
   },
 
-  setCurrentCategory ({ commit }, categoryID) {
-    commit(types.SET_CURRENT_CATEGORY, { categoryID: categoryID })
+  setCurrentCategory ({ commit }, category) {
+    commit(types.SET_CURRENT_CATEGORY, { category: category })
   },
 
   clearCurrentCategory ({ commit }) {

@@ -1,8 +1,11 @@
 <template>
+  <div>
+    <h3 v-if="this.currentCategory !== null">{{ this.currentCategory.name }}</h3>
     <div class="row pl-3">
         <file v-for="file in this.files" :key="file.id" v-if="showFile(file)" :file="file"/>
         <FileModal/>
     </div>
+  </div>
 </template>
 
 <script>
@@ -21,7 +24,7 @@ export default {
 
   computed: mapGetters({
     files: 'files/files',
-    currentCategoryID: 'categories/currentCategoryID'
+    currentCategory: 'categories/currentCategory'
   }),
 
   mounted: async function () {
@@ -30,7 +33,7 @@ export default {
 
   methods: {
     showFile (file) {
-      return (this.currentCategoryID === null || file.categories.includes(this.currentCategoryID))
+      return (this.currentCategory === null || file.categories.includes(this.currentCategory.id))
     }
   }
 }
