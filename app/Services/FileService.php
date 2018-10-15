@@ -24,6 +24,10 @@ class FileService {
         return $this->file_repository->create($data);
     }
 
+    public function get($id) {
+        return $this->file_repository->get($id);
+    }
+
     public function update($data) {
         $file = $this->updateFile($data);
 
