@@ -26,4 +26,10 @@ class FileRepository extends AbstractRepository {
         
         return false;
     }
+
+    public function delete($id) {
+        $file = parent::get($id);
+        if (Storage::disk('local')->delete($file->name . '.' . $file->type)) return parent::delete($id);
+        return false;
+    }
 }
