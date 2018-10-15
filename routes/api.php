@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
     Route::post('files/get', 'FileController@get');
+    Route::post('files/download', 'FileController@download');
     Route::post('files/upload', 'FileController@upload');
     Route::post('files/update', 'FileController@update');
 });

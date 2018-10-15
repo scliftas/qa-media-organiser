@@ -7,8 +7,10 @@ use App\Services\FileService;
 use App\Http\Requests\GetFilesRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\UpdateFileRequest;
+use App\Http\Requests\DownloadFileRequest;
 use App\Http\Resources\FileResource;
 use Auth;
+use Storage;
 
 class FileController extends Controller
 {
@@ -41,5 +43,11 @@ class FileController extends Controller
         $data = $request->all();
         $files = new FileResource($this->file_service->update($data));
         return $files->resolve();
+    }
+
+    public function download(DownloadFileRequest $request) {
+        $file_id = $request->input('id');
+        $file = $this->file_service->get($file_id);
+        return Storage::disk('local')->get($file->name . '.' . $file->type);
     }
 }
