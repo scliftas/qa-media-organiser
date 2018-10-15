@@ -15,6 +15,8 @@ class ImageRepository extends AbstractRepository {
         $file_name = $file->getClientOriginalName();
 
         if (Storage::disk('local')->put($file_name, file_get_contents($file->getRealPath()))) {
+            $this->model->where('file_id', $file_id)->delete();
+
             return $this->model->updateOrCreate([
                 'file_id' => $file_id,
                 'name' => $file->getClientOriginalName(),
