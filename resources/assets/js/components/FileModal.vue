@@ -25,6 +25,7 @@
                     <textarea class="form-control mb-3" v-model="form.file.comment" placeholder="Comments" maxlength="255" rows="5" style="resize: none"></textarea>
 
                     <v-button :type="'info'" class="ml-auto my-auto text-white p-2 w-100">
+                        <input type="file" name="attachImage" :disabled="this.status.saving" @change="attachImage($event.target.files); fileCount = $event.target.files.length" class="input-file">
                         Attach Image <fa icon="image" :style="{ color: 'white' }"/>
                     </v-button>
                 </div>
@@ -59,7 +60,8 @@ export default {
             file: {
                 id: '',
                 comment: ''
-            }
+            },
+            image: {}
         },
         status: {
             downloading: false,
@@ -94,6 +96,11 @@ export default {
 
         closeModal () {
             this.$root.$emit('bv::hide::modal', 'file-modal')
+        },
+
+        attachImage (files) {
+            this.form.image = files[0]
+            console.log(this.form)
         },
 
         async saveFile () {
