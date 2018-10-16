@@ -8,7 +8,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarToggler">
-      <input ref="fileUpload" type="file" style="display: none;" name="import" @change="uploadImport($event.target.files); fileCount = $event.target.files.length">
+      <input accept="application/json" ref="fileUpload" type="file" style="display: none;" name="import" @change="uploadImport($event.target.files); fileCount = $event.target.files.length">
       <ul class="navbar-nav ml-auto">
         <!-- Authenticated -->
         <li v-if="user" class="nav-item dropdown">
