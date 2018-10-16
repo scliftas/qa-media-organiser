@@ -48,6 +48,17 @@ class FileService {
         return $this->file_repository->delete($id);
     }
 
+    public function moveFileDown($data) {
+        $lower_file = DB::table('playlist_files')->where('playlist_id', $data['playlist_id'])->where('position', $data['position'] + 1);
+        
+        $file = DB::table('playlist_files')->where('playlist_id', $data['playlist_id'])->where('file_id', $data['file_id'])->where('position', $data['position']);
+
+        $lower_file->update(array('position' => $data['position']));
+        $file->update(['position' => $data['position'] + 1]);
+        
+        return $this->all();
+    }
+
     private function updateFile($data) {
         $file = $this->file_repository->update($data['file'], $data['file']['id']);
 
