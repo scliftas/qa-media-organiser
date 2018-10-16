@@ -22,7 +22,7 @@ class FileResource extends Resource
             'path' => $this->path,
             'comment' => $this->comment,
             'image' => $this->image()->exists() ? base64_encode(Storage::disk('local')->get($this->image->name)) : null,
-            'playlists' => $this->playlists->pluck('id')->toArray(),
+            'playlists' => $this->playlists->groupBy('id')->toArray(),
             'categories' => $this->categories->pluck('id')->toArray()
         ];
     }
