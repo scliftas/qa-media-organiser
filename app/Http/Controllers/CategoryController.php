@@ -32,4 +32,10 @@ class CategoryController extends Controller
     public function delete(DeleteCategoryRequest $request) {
         return $this->category->delete($request->input('id'));
     }
+
+    public function update(UpdateCategoryRequest $request) {
+        $data = $request->all();
+        unset($data['id']);
+        return $this->category->update($data, $request->input('id'));
+    }
 }

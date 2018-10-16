@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('categories/get', 'CategoryController@get');
     Route::post('categories/create', 'CategoryController@create');
+    Route::post('categories/update', 'CategoryController@update');
     Route::post('categories/delete', 'CategoryController@delete');
 
     Route::post('playlists/get', 'PlaylistController@get');
