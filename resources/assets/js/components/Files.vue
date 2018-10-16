@@ -1,6 +1,10 @@
 <template>
-  <div>
-    <h3 v-if="!hasNeither()">{{ getCurrentTitle() }}</h3>
+  <div class="col">
+    <div v-if="!hasNeither()" class="row text-left pl-4">
+      <h3>{{ getCurrentTitle() }}</h3>
+      <fa icon="edit" class="text-secondary" v-b-tooltip.hover title="Edit"/>
+      <fa icon="trash" class="text-secondary" v-b-tooltip.hover title="Delete"/>
+    </div>
     <div class="row">
       <div class="col" v-if="hasNeither() || hasCurrentCategory()">
         <div class="row pl-3">

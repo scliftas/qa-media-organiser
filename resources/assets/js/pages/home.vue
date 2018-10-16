@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="row">
     <files/>
     <category-modal/>
     <playlist-modal/>
