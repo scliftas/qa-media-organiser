@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('playlists/get', 'PlaylistController@get');
     Route::post('playlists/create', 'PlaylistController@create');
+
+    Route::post('export/generate', 'ExportController@generate');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
