@@ -139,10 +139,12 @@ export const actions = {
       formData.append('playlists[]', '')
     }
 
-    if (fileData.hasOwnProperty('playlists') && fileData.playlists) {
+    if (fileData.hasOwnProperty('playlists') && fileData.playlists && Array.isArray(fileData.playlists)) {
       for (var playlist of fileData.playlists) {
         formData.append('playlists[]', playlist)
       }
+    } else if (fileData.playlists instanceof Object) {
+      formData.append('playlists[]', fileData.playlists)
     } else {
       formData.append('playlists[]', '')
     }
