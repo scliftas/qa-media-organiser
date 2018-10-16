@@ -26,7 +26,7 @@ class File extends Model
 
     public function playlists()
     {
-        return $this->belongsToMany('App\Models\Playlist', 'playlist_files', 'file_id', 'playlist_id');
+        return $this->belongsToMany('App\Models\Playlist', 'playlist_files', 'file_id', 'playlist_id')->withPivot('position');
     }
 
     public function categories()
