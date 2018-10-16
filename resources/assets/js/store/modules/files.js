@@ -75,6 +75,10 @@ export const actions = {
     }
   },
 
+  setFiles ({ commit }, files) {
+    commit(types.FETCH_FILES_SUCCESS, { files: files })
+  },
+
   async searchFiles ({ commit }, term) {
     try {
       const { data } = await axios.post('/api/files/search', { search_term: term })
