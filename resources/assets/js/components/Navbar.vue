@@ -21,7 +21,7 @@
               Export
             </a>
 
-            <div class="dropdown-divier"></div>
+            <div class="dropdown-divider"></div>
             <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
               <fa icon="cog" fixed-width/>
               {{ $t('settings') }}
