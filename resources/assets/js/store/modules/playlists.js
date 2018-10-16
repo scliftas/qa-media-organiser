@@ -44,6 +44,10 @@ export const actions = {
     }
   },
 
+  setPlaylists ({ commit }, playlists) {
+    commit(types.FETCH_PLAYLISTS_SUCCESS, { playlists: playlists })
+  },
+
   async createPlaylist ({ commit }, name) {
     const { data } = await axios.post('/api/playlists/create', { name: name })
 
