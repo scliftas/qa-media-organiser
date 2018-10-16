@@ -33,7 +33,7 @@
                     <textarea class="form-control mb-3" v-model="form.file.comment" placeholder="Comments" maxlength="255" rows="5" style="resize: none"></textarea>
 
                     <label class="btn btn-info btn-file w-100 text-white p-2">
-                        Attach Image <fa icon="image" :style="{ color: 'white' }"/> <input type="file" style="display: none;" name="attachImage" :disabled="this.status.saving" @change="attachImage($event.target.files); fileCount = $event.target.files.length">
+                        Attach Image <fa icon="image" :style="{ color: 'white' }"/> <input accept="image/*" type="file" style="display: none;" name="attachImage" :disabled="this.status.saving" @change="attachImage($event.target.files); fileCount = $event.target.files.length">
                     </label>
                 </div>
             </div>
