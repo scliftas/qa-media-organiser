@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\PlaylistResource;
 use Auth;
 use App\Http\Requests\CreatePlaylistRequest;
+use App\Http\Requests\DeletePlaylistRequest;
 
 class PlaylistController extends Controller
 {
@@ -26,5 +27,9 @@ class PlaylistController extends Controller
         $data['user_id'] = Auth::user()->id;
         $category = new PlaylistResource($this->playlist->create($data));
         return $category->resolve();
+    }
+
+    public function delete(DeletePlaylistRequest $request) {
+        return $this->playlist->delete($request->input('id'));
     }
 }
