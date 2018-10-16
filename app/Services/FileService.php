@@ -91,7 +91,7 @@ class FileService {
         foreach ($data['playlists'] as $playlist) {
             $last_position = DB::table('playlist_files')->where('playlist_id', $playlist)->max('position');
             $file->playlists()->attach($playlist, [
-                'position' => $last_position !== null ? $last_position++ : 1
+                'position' => $last_position !== null ? ++$last_position : 1
             ]);
         }
     }
