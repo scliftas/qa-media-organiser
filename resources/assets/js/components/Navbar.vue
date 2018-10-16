@@ -75,7 +75,14 @@ export default {
 
     async uploadImport (files) {
       if (!files.length) return;
-      await this.$store.dispatch('import/uploadImport', files[0])
+
+      const formData = new FormData()
+      formData.append('file', files[0])
+      const { data } = await axios.post('/api/import/upload', formData)
+
+      this.$store.dispatch('categories/setCategories', data.categories)
+      this.$store.dispatch('playlists/setPlaylists', data.playlists)
+      this.$store.dispatch('files/setFiles', data.files)
     },
 
     async generateExport () {
