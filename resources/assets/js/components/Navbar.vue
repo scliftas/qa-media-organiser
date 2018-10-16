@@ -8,6 +8,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarToggler">
+      <input ref="fileUpload" type="file" style="display: none;" name="import" @change="uploadImport($event.target.files); fileCount = $event.target.files.length">
       <ul class="navbar-nav ml-auto">
         <!-- Authenticated -->
         <li v-if="user" class="nav-item dropdown">
@@ -16,6 +17,12 @@
             {{ user.name }}
           </a>
           <div class="dropdown-menu dropdown-menu-right">
+            <a @click.prevent="openUpload()" class="dropdown-item pl-3" href="#">
+              <fa icon="upload" fixed-width/>
+              Import
+            </a>
+
+            <div class="dropdown-divider"></div>
             <a @click.prevent="generateExport()" class="dropdown-item pl-3" href="#">
               <fa icon="download" fixed-width/>
               Export
@@ -59,6 +66,16 @@ export default {
 
       // Redirect to login.
       this.$router.push({ name: 'login' })
+    },
+
+    openUpload () {
+      this.$refs.fileUpload.value = null
+      this.$refs.fileUpload.click()
+    },
+
+    async uploadImport (files) {
+      if (!files.length) return;
+      await this.$store.dispatch('import/uploadImport', files[0])
     },
 
     async generateExport () {
