@@ -13,6 +13,6 @@ class Category extends Model
 
     public function files()
     {
-        return $this->belongsToMany('App\Modles\File', 'category_files', 'category_id', 'file_id');
+        return $this->belongsToMany('App\Models\File', 'category_files', 'category_id', 'file_id');
     }
 }
