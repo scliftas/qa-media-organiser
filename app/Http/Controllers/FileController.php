@@ -62,4 +62,9 @@ class FileController extends Controller
         $data = $request->all();
         return FileResource::collection($this->file_service->moveFileDown($data)->where('user_id', Auth::user()->id))->resolve();
     }
+
+    public function moveFileUp(MoveFileRequest $request) {
+        $data = $request->all();
+        return FileResource::collection($this->file_service->moveFileUp($data)->where('user_id', Auth::user()->id))->resolve();
+    }
 }
