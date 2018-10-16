@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Services\ImportService;
 use App\Http\Requests\ImportRequest;
 use Auth;
+use App\Http\Resources\FileResource;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\PlaylistResource;
 
 class ImportController extends Controller
 {
@@ -16,6 +19,12 @@ class ImportController extends Controller
     }
 
     public function upload(ImportRequest $request) {
-        return $this->import_service->run($request->all(), Auth::user()->id);
+        $data = $this->import_service->run($request->all(), Auth::user()->id);
+
+        return [
+            'files' => FileResource::collection($data['files'])->resolve(),
+            'categories' => CategoryResource::collection($data['categories'])->resolve(),
+            'playlists' => PlaylistResource::collection($data['playlists'])->resolve()
+        ];
     }
 }
