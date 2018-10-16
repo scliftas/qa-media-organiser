@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('files/upload', 'FileController@upload');
     Route::post('files/update', 'FileController@update');
     Route::post('files/delete', 'FileController@delete');
+    Route::post('files/moveFileDown', 'FileController@moveFileDown');
 
     Route::post('categories/get', 'CategoryController@get');
     Route::post('categories/create', 'CategoryController@create');

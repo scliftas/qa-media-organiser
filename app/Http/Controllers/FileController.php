@@ -9,6 +9,7 @@ use App\Http\Requests\UploadFileRequest;
 use App\Http\Requests\UpdateFileRequest;
 use App\Http\Requests\DownloadFileRequest;
 use App\Http\Requests\DeleteFileRequest;
+use App\Http\Requests\MoveFileRequest;
 use App\Http\Resources\FileResource;
 use Auth;
 use Storage;
@@ -55,5 +56,10 @@ class FileController extends Controller
     public function delete(DeleteFileRequest $request) {
         $file_id = $request->input('id');
         return $this->file_service->delete($file_id);
+    }
+
+    public function moveFileDown(MoveFileRequest $request) {
+        $data = $request->all();
+        return FileResource::collection($this->file_service->moveFileDown($data)->where('user_id', Auth::user()->id))->resolve();
     }
 }
