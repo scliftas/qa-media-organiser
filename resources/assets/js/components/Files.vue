@@ -3,7 +3,7 @@
     <div v-if="!hasNeither()" class="row text-left pl-4">
       <h3 class="mr-2">{{ getCurrentTitle() }}</h3>
       <fa icon="edit" class="text-secondary m-2" size="lg" v-b-tooltip.hover title="Edit"/>
-      <fa icon="trash" class="text-secondary m-2" size="lg" v-b-tooltip.hover title="Delete"/>
+      <fa icon="trash" @click="deleteCurrent" class="text-secondary m-2" size="lg" v-b-tooltip.hover title="Delete"/>
     </div>
     <div class="row">
       <div class="col" v-if="hasNeither() || hasCurrentCategory()">
@@ -64,6 +64,13 @@ export default {
 
     getCurrentTitle () {
       return (this.hasCurrentCategory() ? this.currentCategory.name : (this.hasCurrentPlaylist() ? this.currentPlaylist.name : ''))
+    },
+
+    deleteCurrent () {
+      let type = this.hasCurrentCategory ? 'categories' : (this.hasCurrentPlaylist ? 'playlists' : '')
+
+      this.$store.dispatch(type + '/delete', type === 'categories' ? this.currentCategory : this.currentPlaylist)
+      this.$router.push('/')
     }
   }
 }
