@@ -156,6 +156,17 @@ export const actions = {
 
     const { data } = await axios.post('/api/files/moveFileDown', formData)
     commit(types.FETCH_FILES_SUCCESS, { files: data })
+  },
+
+  async moveFileUp ({ commit }, changeData) {
+    const formData = {
+      file_id: changeData.file.id,
+      playlist_id: changeData.playlist.id,
+      position: changeData.file.position
+    }
+
+    const { data } = await axios.post('/api/files/moveFileUp', formData)
+    commit(types.FETCH_FILES_SUCCESS, { files: data })
   }
 }
 
