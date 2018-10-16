@@ -1,8 +1,13 @@
 <template>
   <div>
-    <h3 v-if="hasCurrentCategory() || hasCurrentPlaylist()">{{ getCurrentTitle() }}</h3>
-    <div class="row pl-3">
-      <file v-for="file in this.files" :key="file.id" v-if="showFile(file)" :file="file"/>
+    <h3 v-if="!hasNeither()">{{ getCurrentTitle() }}</h3>
+    <div class="row">
+      <div class="col" v-if="hasNeither() || hasCurrentCategory()">
+        <div class="row pl-3">
+          <file v-for="file in this.files" :key="file.id" v-if="showFile(file)" :file="file"/>
+        </div>
+      </div>
+      <playlist v-else-if="hasCurrentPlaylist()"/>
       <FileModal/>
     </div>
   </div>
@@ -11,6 +16,7 @@
 <script>
 import axios from 'axios'
 import File from '~/components/File'
+import Playlist from '~/components/Playlist'
 import FileModal from '~/components/FileModal'
 import { mapGetters } from 'vuex'
 
@@ -19,6 +25,7 @@ export default {
 
   components: {
     File,
+    Playlist,
     FileModal
   },
 
@@ -41,12 +48,14 @@ export default {
       return this.currentPlaylist !== null
     },
 
-    showFile (file) {
-      let hasNeither = !this.hasCurrentCategory() && !this.hasCurrentPlaylist()
-      let categoryMatches = this.hasCurrentCategory() && file.categories.includes(this.currentCategory.id)
-      let playlistMatches = this.hasCurrentPlaylist() && file.playlists.includes(this.currentPlaylist.id)
+    hasNeither () {
+      return !this.hasCurrentCategory() && !this.hasCurrentPlaylist()
+    },
 
-      return (hasNeither) || (categoryMatches || playlistMatches)
+    showFile (file) {
+      let categoryMatches = this.hasCurrentCategory() && file.categories.includes(this.currentCategory.id)
+
+      return (this.hasNeither()) || (categoryMatches)
     },
 
     getCurrentTitle () {
