@@ -1,9 +1,11 @@
 <template>
+  <div>
+    <h3 v-if="hasCurrentCategory() || hasCurrentPlaylist()">{{ getCurrentTitle() }}</h3>
     <div class="row pl-3">
-        <h3 v-if="this.currentCategory !== null">{{ this.currentCategory.name }}</h3>
-        <file v-for="file in this.files" :key="file.id" v-if="showFile(file)" :file="file"/>
-        <FileModal/>
+      <file v-for="file in this.files" :key="file.id" v-if="showFile(file)" :file="file"/>
+      <FileModal/>
     </div>
+  </div>
 </template>
 
 <script>
@@ -22,7 +24,8 @@ export default {
 
   computed: mapGetters({
     files: 'files/files',
-    currentCategory: 'categories/currentCategory'
+    currentCategory: 'categories/currentCategory',
+    currentPlaylist: 'playlists/currentPlaylist'
   }),
 
   mounted: async function () {
@@ -30,8 +33,24 @@ export default {
   },
 
   methods: {
+    hasCurrentCategory () {
+      return this.currentCategory !== null
+    },
+
+    hasCurrentPlaylist () {
+      return this.currentPlaylist !== null
+    },
+
     showFile (file) {
-      return (this.currentCategory === null || file.categories.includes(this.currentCategory.id))
+      let hasNeither = !this.hasCurrentCategory() && !this.hasCurrentPlaylist()
+      let categoryMatches = this.hasCurrentCategory() && file.categories.includes(this.currentCategory.id)
+      let playlistMatches = this.hasCurrentPlaylist() && file.playlists.includes(this.currentPlaylist.id)
+
+      return (hasNeither) || (categoryMatches || playlistMatches)
+    },
+
+    getCurrentTitle () {
+      return (this.hasCurrentCategory() ? this.currentCategory.name : (this.hasCurrentPlaylist() ? this.currentPlaylist.name : ''))
     }
   }
 }
