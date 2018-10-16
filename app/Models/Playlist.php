@@ -13,6 +13,6 @@ class Playlist extends Model
 
     public function files()
     {
-        return $this->belongsToMany('App\Modles\File', 'playlist_files', 'playlist_id', 'file_id');
+        return $this->belongsToMany('App\Models\File', 'playlist_files', 'playlist_id', 'file_id');
     }
 }
