@@ -67,7 +67,7 @@ export default {
     },
 
     deleteCurrent () {
-      let type = this.hasCurrentCategory ? 'categories' : (this.hasCurrentPlaylist ? 'playlists' : '')
+      let type = this.hasCurrentCategory() ? 'categories' : (this.hasCurrentPlaylist() ? 'playlists' : '')
 
       this.$store.dispatch(type + '/delete', type === 'categories' ? this.currentCategory : this.currentPlaylist)
       this.$router.push('/')
