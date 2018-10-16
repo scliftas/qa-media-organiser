@@ -30,6 +30,11 @@ export const mutations = {
 
   [types.CLEAR_CURRENT_PLAYLIST] (state) {
     state.currentPlaylist = null
+  },
+
+  [types.DELETE_PLAYLIST_SUCCESS] (state, { id }) {
+    const index = state.playlists.findIndex(playlist => playlist.id === id)
+    if (index !== -1) state.playlists.splice(index, 1)
   }
 }
 
@@ -60,5 +65,11 @@ export const actions = {
 
   clearCurrentPlaylist ({ commit }) {
     commit(types.CLEAR_CURRENT_PLAYLIST)
+  },
+
+  async delete ({ commit }, playlist) {
+    await axios.post('/api/playlists/delete', { id: playlist.id })
+    commit(types.CLEAR_CURRENT_PLAYLIST)
+    commit(types.DELETE_PLAYLIST_SUCCESS, { id: playlist.id })
   }
 }
