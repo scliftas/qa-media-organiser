@@ -16,6 +16,10 @@ abstract class AbstractRepository implements RepositoryInterface {
         return $this->model->all();
     }
 
+    public function allWith($relations) {
+        return $this->model->with($relations);
+    }
+
     public function create($data) {
         return $this->model->create($data);
     }
