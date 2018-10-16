@@ -30,6 +30,11 @@ export const mutations = {
 
   [types.CLEAR_CURRENT_CATEGORY] (state) {
     state.currentCategory = null
+  },
+
+  [types.DELETE_CATEGORY_SUCCESS] (state, { id }) {
+    const index = state.categories.findIndex(category => category.id === id)
+    if (index !== -1) state.categories.splice(index, 1)
   }
 }
 
@@ -60,5 +65,11 @@ export const actions = {
 
   clearCurrentCategory ({ commit }) {
     commit(types.CLEAR_CURRENT_CATEGORY)
+  },
+
+  async delete ({ commit }, category) {
+    await axios.post('/api/categories/delete', { id: category.id })
+    commit(types.CLEAR_CURRENT_CATEGORY)
+    commit(types.DELETE_CATEGORY_SUCCESS, { id: category.id })
   }
 }
