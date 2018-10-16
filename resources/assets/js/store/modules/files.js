@@ -127,12 +127,20 @@ export const actions = {
 
     if (fileData.image !== null) formData.append('image', fileData.image)
 
-    for (var category of fileData.categories) {
-      formData.append('categories[]', category)
+    if (fileData.hasOwnProperty('categories') && fileData.categories) {
+      for (var category of fileData.categories) {
+        formData.append('categories[]', category)
+      }
+    } else {
+      formData.append('playlists[]', '')
     }
 
-    for (var playlist of fileData.playlists) {
-      formData.append('playlists[]', playlist)
+    if (fileData.hasOwnProperty('playlists') && fileData.playlists) {
+      for (var playlist of fileData.playlists) {
+        formData.append('playlists[]', playlist)
+      }
+    } else {
+      formData.append('playlists[]', '')
     }
 
     const { data } = await axios.post('/api/files/update', formData)
