@@ -3,7 +3,7 @@
         <b-table :fields="fields" :items="getFiles()" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :hover="true" class="text-left">
             <template slot="actions" slot-scope="data">
                 <fa icon="arrow-up" class="text-success m-1" v-if="data.index > 0" v-b-tooltip.hover title="Move Up"></fa>
-                <fa icon="arrow-down" class="text-success m-1" v-b-tooltip.hover title="Move Down"></fa>
+                <fa icon="arrow-down" class="text-success m-1" v-b-tooltip.hover title="Move Down" @click="moveDown(data.item)"></fa>
                 <fa icon="edit" class="text-success m-1" v-b-tooltip.hover title="Edit" @click="showModal(data.item)"></fa>
             </template>
         </b-table>
@@ -56,6 +56,14 @@ export default {
         async showModal (file) {
             await this.$store.dispatch('files/setChosenFile', file)
             this.$root.$emit('bv::show::modal', 'file-modal')
+        },
+
+        async moveDown (file) {
+            let data = {
+                file: file,
+                playlist: this.currentPlaylist
+            }
+            await this.$store.dispatch('files/moveFileDown', data)
         }
     }
 }
