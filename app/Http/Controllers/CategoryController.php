@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use Auth;
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\DeleteCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -26,5 +27,9 @@ class CategoryController extends Controller
         $data['user_id'] = Auth::user()->id;
         $category = new CategoryResource($this->category->create($data));
         return $category->resolve();
+    }
+
+    public function delete(DeleteCategoryRequest $request) {
+        return $this->category->delete($request->input('id'));
     }
 }
