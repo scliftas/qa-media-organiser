@@ -55,10 +55,12 @@ export default {
     },
 
     setCategory (category) {
+      this.$store.dispatch('playlists/clearCurrentPlaylist')
       this.$store.dispatch('categories/setCurrentCategory', category)
     },
 
     setPlaylist (playlist) {
+      this.$store.dispatch('categories/clearCurrentCategory')
       this.$store.dispatch('playlists/setCurrentPlaylist', playlist)
     },
 
