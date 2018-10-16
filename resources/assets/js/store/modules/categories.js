@@ -44,6 +44,10 @@ export const actions = {
     }
   },
 
+  setCategories ({ commit }, categories) {
+    commit(types.FETCH_CATEGORIES_SUCCESS, { categories: categories })
+  },
+
   async createCategory ({ commit }, name) {
     const { data } = await axios.post('/api/categories/create', { name: name })
 
