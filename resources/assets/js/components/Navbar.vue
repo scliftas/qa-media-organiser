@@ -16,6 +16,12 @@
             {{ user.name }}
           </a>
           <div class="dropdown-menu dropdown-menu-right">
+            <a @click.prevent="generateExport()" class="dropdown-item pl-3" href="#">
+              <fa icon="download" fixed-width/>
+              Export
+            </a>
+
+            <div class="dropdown-divier"></div>
             <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
               <fa icon="cog" fixed-width/>
               {{ $t('settings') }}
@@ -34,6 +40,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -52,6 +59,10 @@ export default {
 
       // Redirect to login.
       this.$router.push({ name: 'login' })
+    },
+
+    async generateExport () {
+      let response = await axios.post('/api/export/generate');
     }
   }
 }
