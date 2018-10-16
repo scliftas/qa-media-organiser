@@ -25,4 +25,18 @@ class ImageRepository extends AbstractRepository {
         }
         
     }
+
+    public function createFromBlob($data) {
+        if (Storage::disk('local')->put($data->name, base64_decode($data->blob))) {
+            $file = [
+                'file_id' => $data->file_id,
+                'name' => $data->name,
+                'path' => Storage::disk('local')->path($data->name)
+            ];
+            
+            return $this->model->updateOrCreate($file);
+        }
+
+        return false;
+    }
 }
