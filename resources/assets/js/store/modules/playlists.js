@@ -35,6 +35,14 @@ export const mutations = {
   [types.DELETE_PLAYLIST_SUCCESS] (state, { id }) {
     const index = state.playlists.findIndex(playlist => playlist.id === id)
     if (index !== -1) state.playlists.splice(index, 1)
+  },
+
+  [types.UPDATE_PLAYLIST_SUCCESS] (state, { updatedPlaylist }) {
+    const index = state.playlists.findIndex(playlist => playlist.id === updatedPlaylist.id)
+    if (index !== -1) {
+      state.playlists.splice(index, 1, updatedPlaylist)
+      if (updatedPlaylist.id === state.currentPlaylist.id) state.currentPlaylist = updatedPlaylist
+    }
   }
 }
 
@@ -65,6 +73,16 @@ export const actions = {
 
   clearCurrentPlaylist ({ commit }) {
     commit(types.CLEAR_CURRENT_PLAYLIST)
+  },
+
+  async update ({ commit }, playlist) {
+    const playlistData = {
+      id: playlist.id,
+      name: playlist.name
+    }
+
+    const { data } = await axios.post('/api/playlists/update', playlistData)
+    commit(types.UPDATE_PLAYLIST_SUCCESS, { updatedPlaylist: data })
   },
 
   async delete ({ commit }, playlist) {
