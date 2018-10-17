@@ -1,7 +1,7 @@
 <template>
   <div class="col">
     <div v-if="!hasNeither()" class="row text-left pl-4">
-      <h3 class="mr-2">{{ getCurrentTitle() }}</h3>
+      <h3 class="mr-2">{{ title }}</h3>
       <fa icon="edit" @click="showModal" class="text-secondary m-2" size="lg" v-b-tooltip.hover title="Edit"/>
       <fa icon="trash" @click="deleteCurrent" class="text-secondary m-2" size="lg" v-b-tooltip.hover title="Delete"/>
     </div>
@@ -13,7 +13,8 @@
       </div>
       <playlist v-else-if="hasCurrentPlaylist()"/>
       <FileModal/>
-      <EditTitleModal :type="currentType()"/>
+      <EditCategoryModal/>
+      <EditPlaylistModal/>
     </div>
   </div>
 </template>
@@ -23,17 +24,23 @@ import axios from 'axios'
 import File from '~/components/File'
 import Playlist from '~/components/Playlist'
 import FileModal from '~/components/FileModal'
-import EditTitleModal from '~/components/EditTitleModal'
+import EditCategoryModal from '~/components/EditCategoryModal'
+import EditPlaylistModal from '~/components/EditPlaylistModal'
 import { mapGetters } from 'vuex'
 
 export default {
   middleware: 'auth',
 
+  data: () => ({
+    title: ''
+  }),
+
   components: {
     File,
     Playlist,
     FileModal,
-    EditTitleModal
+    EditCategoryModal,
+    EditPlaylistModal
   },
 
   computed: mapGetters({
@@ -41,6 +48,15 @@ export default {
     currentCategory: 'categories/currentCategory',
     currentPlaylist: 'playlists/currentPlaylist'
   }),
+
+  watch: {
+    currentCategory (category) {
+      this.title = category.name
+    },
+    currentPlaylist (playlist) {
+      this.title = playlist.name
+    }
+  },
 
   mounted: async function () {
     await this.$store.dispatch('files/getFiles', this.$router.currentRoute.params.type_id || false)
@@ -69,12 +85,10 @@ export default {
       return (this.hasNeither()) || (categoryMatches)
     },
 
-    getCurrentTitle () {
-      return (this.hasCurrentCategory() ? this.currentCategory.name : (this.hasCurrentPlaylist() ? this.currentPlaylist.name : ''))
-    },
-
     showModal () {
-      this.$root.$emit('bv::show::modal', 'edit-title-modal')
+      let type = this.currentType()
+      console.log(type)
+      this.$root.$emit('bv::show::modal', 'edit-' + type + '-modal')
     },
 
     deleteCurrent () {
