@@ -9,6 +9,7 @@ use App\Http\Resources\CategoryResource;
 use Auth;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\DeleteCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
