@@ -94,7 +94,7 @@ export default {
                 },
                 image: null,
                 categories: this.file.categories,
-                playlists: this.file.playlists
+                playlists: Object.keys(this.file.playlists)
             }
         }
     },
